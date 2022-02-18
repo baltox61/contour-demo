@@ -23,19 +23,19 @@ spec:
           - name: http
             containerPort: {{ .Values.service.port }}
             protocol: TCP
-          #livenessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: http
-          #readinessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           env:
-         # {{- if ne (.Values.deployment.container.port | int) (8080 | int) }}
-         # - name: PORT
-         #   value: "{{ .Values.deployment.container.port }}"
-         # {{- end }}
+          {{- if ne (.Values.deployment.container.port | int) (8080 | int) }}
+          - name: PORT
+            value: "{{ .Values.deployment.container.port }}"
+          {{- end }}
           {{- if .Values.message }}
           - name: MESSAGE
             value: "{{ .Values.message }}"
